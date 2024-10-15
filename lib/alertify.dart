@@ -8,8 +8,14 @@ part 'src/alert_notifier.dart';
 part 'src/widget_alert.dart';
 
 class Alertify {
-  static void showAlert(
-    BuildContext context, {
+  static BuildContext? _context; // Store the context here
+
+  // Initialize the Alertify with context
+  static void init(BuildContext context) {
+    _context = context;
+  }
+
+  static void showAlert({
     required String key,
     required String message,
     required AlertType type,
@@ -17,7 +23,13 @@ class Alertify {
     VoidCallback? onShow,
     VoidCallback? onClose,
   }) {
-    context.read<AlertNotifier>().showAlert(
+    // Check if the context is initialized
+    if (_context == null) {
+      throw Exception(
+          "Alertify is not initialized. Call Alertify.init(context) in main.");
+    }
+
+    _context!.read<AlertNotifier>().showAlert(
           key: key,
           message: message,
           type: type,
