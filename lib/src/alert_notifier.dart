@@ -12,14 +12,14 @@ class AlertNotifier extends ChangeNotifier {
   Map<String, AlertData> get alerts => _alerts;
 
   void showAlert({
-    required String key,
+    required String alertKey,
     required String message,
     required AlertType type,
     int? duration,
     Function()? onShow,
     Function()? onClose,
   }) {
-    _alerts[key] = AlertData(message, type, duration, onShow, onClose);
+    _alerts[alertKey] = AlertData(message, type, duration, onShow, onClose);
     notifyListeners();
     onShow?.call();
   }

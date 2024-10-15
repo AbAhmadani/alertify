@@ -16,7 +16,7 @@ void main() {
 
     test('showAlert should add an alert', () {
       alertNotifier.showAlert(
-        key: 'alert1',
+        alertKey: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
         duration: 3,
@@ -26,7 +26,7 @@ void main() {
 
     test('hideAlert should remove an alert', () {
       alertNotifier.showAlert(
-        key: 'alert1',
+        alertKey: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
       );
@@ -36,7 +36,7 @@ void main() {
 
     test('getMessage should return correct message', () {
       alertNotifier.showAlert(
-        key: 'alert1',
+        alertKey: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
       );
@@ -45,7 +45,7 @@ void main() {
 
     test('getDuration should return correct duration', () {
       alertNotifier.showAlert(
-        key: 'alert1',
+        alertKey: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
         duration: 5,
@@ -55,7 +55,7 @@ void main() {
 
     test('isVisible should return true for active alerts', () {
       alertNotifier.showAlert(
-        key: 'alert1',
+        alertKey: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
       );
@@ -64,7 +64,7 @@ void main() {
 
     test('isVisible should return false for removed alerts', () {
       alertNotifier.showAlert(
-        key: 'alert1',
+        alertKey: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
       );

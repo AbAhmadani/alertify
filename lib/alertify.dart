@@ -16,7 +16,7 @@ class Alertify {
   }
 
   static void showAlert({
-    required String key,
+    required String alertKey,
     required String message,
     required AlertType type,
     int? duration,
@@ -30,7 +30,7 @@ class Alertify {
     }
 
     _context!.read<AlertNotifier>().showAlert(
-          key: key,
+          alertKey: alertKey,
           message: message,
           type: type,
           duration: duration,
