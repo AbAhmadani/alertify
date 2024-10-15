@@ -11,27 +11,32 @@ class CustomAlert extends StatefulWidget {
 
 class _CustomAlertState extends State<CustomAlert> {
   bool _isVisible = false;
-  double _height = 0.0;
-  Timer? _timer;
+  double _height = 0.0; // Track height for animation
+  Timer? _timer; // Timer variable to manage the auto-hide
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final notifier = context.watch<AlertNotifier>();
+    // Check if the alert is visible
     if (notifier.isVisible(widget.uniqueKey)) {
       _showAlert(notifier);
-    } else {
+    } else if (!notifier.isVisible(widget.uniqueKey)) {
       _hideAlert(notifier);
     }
   }
 
   void _showAlert(AlertNotifier notifier) {
+    // Cancel the existing timer if it's active
     _timer?.cancel();
+
+    // Set the state to make the alert visible
     setState(() {
       _isVisible = true;
-      _height = 50.0;
+      _height = 50.0; // Set height to 50 when visible
     });
 
+    // Start a new timer to auto-hide the alert after the specified duration
     final duration = notifier.getDuration(widget.uniqueKey);
     _timer = Timer(Duration(seconds: duration), () {
       _hideAlert(notifier);
@@ -40,16 +45,18 @@ class _CustomAlertState extends State<CustomAlert> {
 
   void _hideAlert(AlertNotifier notifier) {
     setState(() {
-      _height = 0.0;
+      _height = 0.0; // Set height to 0 when hiding
     });
 
+    // Cancel the timer if it's active
     _timer?.cancel();
 
     Future.delayed(const Duration(milliseconds: 300), () {
+      // Update visibility after the animation duration.
       if (mounted) {
         notifier.hideAlert(widget.uniqueKey);
         setState(() {
-          _isVisible = false;
+          _isVisible = false; // Update visibility state after hiding
         });
       }
     });
@@ -57,6 +64,7 @@ class _CustomAlertState extends State<CustomAlert> {
 
   @override
   void dispose() {
+    // Ensure the timer is canceled when the widget is disposed
     _timer?.cancel();
     super.dispose();
   }
@@ -66,14 +74,14 @@ class _CustomAlertState extends State<CustomAlert> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
-      height: _height,
+      height: _height, // Animate height
       child: _isVisible
           ? _buildAlertContent(
               context.read<AlertNotifier>().getMessage(widget.uniqueKey),
               context.read<AlertNotifier>().getType(widget.uniqueKey),
               context.read<AlertNotifier>(),
             )
-          : const SizedBox.shrink(),
+          : const SizedBox.shrink(), // Return empty box if not visible
     );
   }
 
@@ -115,30 +123,32 @@ class _CustomAlertState extends State<CustomAlert> {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.all(5),
-      child: Row(
-        children: [
-          Icon(iconData, color: borderColor),
-          const SizedBox(width: 12.0),
-          Expanded(
-            child: Text(
-              message,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          IconButton(
-            iconSize: 20,
-            icon: const Icon(Icons.close),
-            color: borderColor,
-            onPressed: () {
-              _hideAlert(notifier);
-            },
-          ),
-        ],
-      ),
+      child: _height > 0
+          ? Row(
+              children: [
+                Icon(iconData, color: borderColor),
+                const SizedBox(width: 12.0),
+                Expanded(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                IconButton(
+                  iconSize: 20,
+                  icon: const Icon(Icons.close),
+                  color: borderColor,
+                  onPressed: () {
+                    _hideAlert(notifier);
+                  },
+                ),
+              ],
+            )
+          : Container(),
     );
   }
 }
