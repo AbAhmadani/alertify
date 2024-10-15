@@ -20,7 +20,7 @@ class Alertify {
           key: key,
           message: message,
           type: type,
-          duration: duration ?? 3,
+          duration: duration,
         );
   }
 }
