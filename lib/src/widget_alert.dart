@@ -1,9 +1,9 @@
 part of alertify;
 
 class AlertWidget extends StatefulWidget {
-  final String uniqueKey;
+  final String alertKey;
 
-  const AlertWidget({Key? key, required this.uniqueKey}) : super(key: key);
+  const AlertWidget({Key? key, required this.alertKey}) : super(key: key);
 
   @override
   _AlertWidgetState createState() => _AlertWidgetState();
@@ -19,7 +19,7 @@ class _AlertWidgetState extends State<AlertWidget> {
     super.didChangeDependencies();
     final notifier = context.watch<AlertNotifier>();
     // Check if the alert is visible
-    if (notifier.isVisible(widget.uniqueKey)) {
+    if (notifier.isVisible(widget.alertKey)) {
       _showAlert(notifier);
     } else if (_isVisible) {
       _hideAlert(notifier); // Only hide if it is currently visible
@@ -39,7 +39,7 @@ class _AlertWidgetState extends State<AlertWidget> {
     });
 
     // Start a new timer to auto-hide the alert after the specified duration
-    final duration = notifier.getDuration(widget.uniqueKey);
+    final duration = notifier.getDuration(widget.alertKey);
     _timer = Timer(Duration(seconds: duration), () {
       _hideAlert(notifier);
     });
@@ -59,7 +59,7 @@ class _AlertWidgetState extends State<AlertWidget> {
     Future.delayed(const Duration(milliseconds: 300), () {
       // Update visibility after the animation duration.
       if (mounted) {
-        notifier.hideAlert(widget.uniqueKey);
+        notifier.hideAlert(widget.alertKey);
         setState(() {
           _isVisible = false; // Update visibility state after hiding
         });
@@ -82,8 +82,8 @@ class _AlertWidgetState extends State<AlertWidget> {
       height: _height, // Animate height
       child: _isVisible
           ? _buildAlertContent(
-              context.read<AlertNotifier>().getMessage(widget.uniqueKey),
-              context.read<AlertNotifier>().getType(widget.uniqueKey),
+              context.read<AlertNotifier>().getMessage(widget.alertKey),
+              context.read<AlertNotifier>().getType(widget.alertKey),
               context.read<AlertNotifier>(),
             )
           : const SizedBox.shrink(), // Return empty box if not visible
