@@ -19,6 +19,7 @@ void main() {
         key: 'alert1',
         message: 'Test Alert',
         type: AlertType.success,
+        duration: 3,
       );
       expect(alertNotifier.alerts.containsKey('alert1'), true);
     });
@@ -50,6 +51,25 @@ void main() {
         duration: 5,
       );
       expect(alertNotifier.getDuration('alert1'), 5);
+    });
+
+    test('isVisible should return true for active alerts', () {
+      alertNotifier.showAlert(
+        key: 'alert1',
+        message: 'Test Alert',
+        type: AlertType.success,
+      );
+      expect(alertNotifier.isVisible('alert1'), true);
+    });
+
+    test('isVisible should return false for removed alerts', () {
+      alertNotifier.showAlert(
+        key: 'alert1',
+        message: 'Test Alert',
+        type: AlertType.success,
+      );
+      alertNotifier.hideAlert('alert1');
+      expect(alertNotifier.isVisible('alert1'), false);
     });
   });
 }

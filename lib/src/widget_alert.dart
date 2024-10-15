@@ -21,12 +21,14 @@ class _AlertWidgetState extends State<AlertWidget> {
     // Check if the alert is visible
     if (notifier.isVisible(widget.uniqueKey)) {
       _showAlert(notifier);
-    } else if (!notifier.isVisible(widget.uniqueKey)) {
-      _hideAlert(notifier);
+    } else if (_isVisible) {
+      _hideAlert(notifier); // Only hide if it is currently visible
     }
   }
 
   void _showAlert(AlertNotifier notifier) {
+    if (_isVisible) return; // Avoid showing if already visible
+
     // Cancel the existing timer if it's active
     _timer?.cancel();
 
@@ -44,12 +46,15 @@ class _AlertWidgetState extends State<AlertWidget> {
   }
 
   void _hideAlert(AlertNotifier notifier) {
-    setState(() {
-      _height = 0.0; // Set height to 0 when hiding
-    });
+    if (!_isVisible) return; // Avoid hiding if already hidden
 
     // Cancel the timer if it's active
     _timer?.cancel();
+
+    // Update visibility state
+    setState(() {
+      _height = 0.0; // Set height to 0 when hiding
+    });
 
     Future.delayed(const Duration(milliseconds: 300), () {
       // Update visibility after the animation duration.

@@ -7,26 +7,20 @@ enum AlertType {
   info,
 }
 
-class AlertNotifier with ChangeNotifier {
-  final Map<String, AlertInfo> _alerts = {};
+class AlertNotifier extends ChangeNotifier {
+  final Map<String, AlertData> _alerts = {}; // Store alerts
+  Map<String, AlertData> get alerts => _alerts;
 
   void showAlert({
     required String key,
     required String message,
     required AlertType type,
     int? duration,
-    Function? onShow,
-    Function? onClose,
+    Function()? onShow,
+    Function()? onClose,
   }) {
-    _alerts[key] = AlertInfo(
-      message: message,
-      type: type,
-      onClose: onClose,
-      duration: duration,
-    );
+    _alerts[key] = AlertData(message, type, duration, onShow, onClose);
     notifyListeners();
-
-    onShow?.call();
   }
 
   void hideAlert(String key) {
@@ -37,28 +31,29 @@ class AlertNotifier with ChangeNotifier {
     }
   }
 
-  bool isVisible(String key) => _alerts.containsKey(key);
+  bool isVisible(String key) {
+    return _alerts.containsKey(key);
+  }
 
-  String getMessage(String key) => _alerts[key]?.message ?? '';
+  String getMessage(String key) {
+    return _alerts[key]?.message ?? '';
+  }
 
-  AlertType getType(String key) => _alerts[key]?.type ?? AlertType.info;
+  AlertType getType(String key) {
+    return _alerts[key]?.type ?? AlertType.info;
+  }
 
-  int getDuration(String key) => _alerts[key]?.duration ?? 2;
-
-  /// Get all alerts.
-  Map<String, AlertInfo> get alerts => _alerts;
+  int getDuration(String key) {
+    return _alerts[key]?.duration ?? 2;
+  }
 }
 
-class AlertInfo {
+class AlertData {
   final String message;
   final AlertType type;
-  final Function? onClose;
   final int? duration;
+  final Function()? onShow;
+  final Function()? onClose;
 
-  AlertInfo({
-    required this.message,
-    required this.type,
-    this.onClose,
-    this.duration,
-  });
+  AlertData(this.message, this.type, this.duration, this.onShow, this.onClose);
 }
