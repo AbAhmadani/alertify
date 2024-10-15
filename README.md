@@ -61,6 +61,12 @@ void main() {
   );
 }
 
+@override
+Widget build(BuildContext context) {
+  Alertify.init(context); initialize with main context
+  ...
+}
+
 ### Step 3: Use of AlertWidget in Your App
 
 AlertWidget(uniqueKey: "your_alert_Key"),
