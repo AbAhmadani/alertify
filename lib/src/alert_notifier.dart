@@ -8,10 +8,7 @@ enum AlertType {
 }
 
 class AlertNotifier with ChangeNotifier {
-  final Map<String, AlertInfo> _alerts = {}; // Still private
-
-  // Expose the _alerts map using a getter
-  Map<String, AlertInfo> get alerts => _alerts;
+  final Map<String, AlertInfo> _alerts = {};
 
   void showAlert({
     required String key,
@@ -24,6 +21,7 @@ class AlertNotifier with ChangeNotifier {
     _alerts[key] = AlertInfo(
       message: message,
       type: type,
+      onClose: onClose,
       duration: duration,
     );
     notifyListeners();
@@ -33,6 +31,7 @@ class AlertNotifier with ChangeNotifier {
 
   void hideAlert(String key) {
     if (_alerts.containsKey(key)) {
+      _alerts[key]?.onClose?.call();
       _alerts.remove(key);
       notifyListeners();
     }
@@ -45,16 +44,21 @@ class AlertNotifier with ChangeNotifier {
   AlertType getType(String key) => _alerts[key]?.type ?? AlertType.info;
 
   int getDuration(String key) => _alerts[key]?.duration ?? 2;
+
+  /// Get all alerts.
+  Map<String, AlertInfo> get alerts => _alerts;
 }
 
 class AlertInfo {
   final String message;
   final AlertType type;
+  final Function? onClose;
   final int? duration;
 
   AlertInfo({
     required this.message,
     required this.type,
+    this.onClose,
     this.duration,
   });
 }
