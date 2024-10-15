@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 part 'src/alert_notifier.dart';
-part 'src/custom_alert.dart';
+part 'src/widget_alert.dart';
 
 class Alertify {
   static void showAlert(

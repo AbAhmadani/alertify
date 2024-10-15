@@ -1,15 +1,15 @@
 part of alertify;
 
-class CustomAlert extends StatefulWidget {
+class AlertWidget extends StatefulWidget {
   final String uniqueKey;
 
-  const CustomAlert({Key? key, required this.uniqueKey}) : super(key: key);
+  const AlertWidget({Key? key, required this.uniqueKey}) : super(key: key);
 
   @override
-  _CustomAlertState createState() => _CustomAlertState();
+  _AlertWidgetState createState() => _AlertWidgetState();
 }
 
-class _CustomAlertState extends State<CustomAlert> {
+class _AlertWidgetState extends State<AlertWidget> {
   bool _isVisible = false;
   double _height = 0.0; // Track height for animation
   Timer? _timer; // Timer variable to manage the auto-hide
