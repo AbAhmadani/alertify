@@ -123,7 +123,7 @@ class _CustomAlertState extends State<CustomAlert> {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.all(5),
-      child: _height > 0
+      child: _height > 25
           ? Row(
               children: [
                 Icon(iconData, color: borderColor),
