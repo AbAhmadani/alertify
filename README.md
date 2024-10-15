@@ -42,7 +42,7 @@ dependencies:
   flutter:
     sdk: flutter
   alertify: ^1.0.0  # Check for the latest version on pub.dev
-  provider: ^6.0.0   # Also ensure provider is added for state management
+  provider: ^6.0.5   # Also ensure provider is added for state management
 
 ### Step 2: Add ChangeNotifierProvider
 
