@@ -21,6 +21,7 @@ class AlertNotifier extends ChangeNotifier {
   }) {
     _alerts[key] = AlertData(message, type, duration, onShow, onClose);
     notifyListeners();
+    onShow?.call();
   }
 
   void hideAlert(String key) {
