@@ -65,9 +65,8 @@ void main() {
 
 AlertWidget(uniqueKey: "your_alert_Key"),
 
-final alertNotifier = Provider.of<AlertNotifier>(context);
-
-alertNotifier.showAlert(
+Alertify.showAlert(
+                  context,
                   key: 'your_alert_Key',
                   message: 'This is a message alert!',
                   type: AlertType.success/error/warning/info,
