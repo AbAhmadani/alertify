@@ -1,7 +1,6 @@
 library alertify;
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +14,16 @@ class Alertify {
     required String message,
     required AlertType type,
     int? duration,
+    VoidCallback? onShow,
+    VoidCallback? onClose,
   }) {
     context.read<AlertNotifier>().showAlert(
           key: key,
           message: message,
           type: type,
           duration: duration,
+          onShow: onShow,
+          onClose: onClose,
         );
   }
 }
