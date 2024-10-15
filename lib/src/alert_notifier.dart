@@ -24,28 +24,28 @@ class AlertNotifier extends ChangeNotifier {
     onShow?.call();
   }
 
-  void hideAlert(String key) {
-    if (_alerts.containsKey(key)) {
-      _alerts[key]?.onClose?.call();
-      _alerts.remove(key);
+  void hideAlert(String alertKey) {
+    if (_alerts.containsKey(alertKey)) {
+      _alerts[alertKey]?.onClose?.call();
+      _alerts.remove(alertKey);
       notifyListeners();
     }
   }
 
-  bool isVisible(String key) {
-    return _alerts.containsKey(key);
+  bool isVisible(String alertKey) {
+    return _alerts.containsKey(alertKey);
   }
 
-  String getMessage(String key) {
-    return _alerts[key]?.message ?? '';
+  String getMessage(String alertKey) {
+    return _alerts[alertKey]?.message ?? '';
   }
 
-  AlertType getType(String key) {
-    return _alerts[key]?.type ?? AlertType.info;
+  AlertType getType(String alertKey) {
+    return _alerts[alertKey]?.type ?? AlertType.info;
   }
 
-  int getDuration(String key) {
-    return _alerts[key]?.duration ?? 2;
+  int getDuration(String alertKey) {
+    return _alerts[alertKey]?.duration ?? 2;
   }
 }
 
