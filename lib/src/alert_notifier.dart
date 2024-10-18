@@ -45,7 +45,7 @@ class AlertNotifier extends ChangeNotifier {
   }
 
   int getDuration(String alertKey) {
-    return _alerts[alertKey]?.duration ?? 2;
+    return _alerts[alertKey]?.duration ?? 3;
   }
 }
 
