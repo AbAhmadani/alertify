@@ -65,11 +65,11 @@ Widget build(BuildContext context) {
 You can use the `AlertWidget` and show alerts as follows:
 
 ```dart
-AlertWidget(uniqueKey: "your_alert_key"),
+AlertWidget(alertKey: "your_alert_key"),
 
 Alertify.showAlert(
   context,
-  key: 'your_alert_key',
+  alertKey: 'your_alert_key',
   message: 'This is a message alert!',
   type: AlertType.success, // Choose between success/error/warning/info
   duration: 3, // Optional: Default is 2 seconds
